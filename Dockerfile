@@ -1,5 +1,5 @@
 FROM alpine:latest as py-ea
-COPY rules/dave.yaml /tmp
+COPY rules/disk_full.yaml /tmp
 ARG ELASTALERT_VERSION=v0.1.38
 ENV ELASTALERT_VERSION=${ELASTALERT_VERSION}
 # URL from which to download Elastalert.
@@ -35,7 +35,7 @@ RUN apk add --update --no-cache curl tzdata python2 make libmagic
 COPY --from=py-ea /usr/lib/python2.7/site-packages /usr/lib/python2.7/site-packages
 COPY --from=py-ea /opt/elastalert /opt/elastalert
 COPY --from=py-ea /usr/bin/elastalert* /usr/bin/
-COPY --from=py-ea /tmp/dave.yaml /opt/elastalert/rules/dave.yaml
+COPY --from=py-ea /tmp/disk_full.yaml /opt/elastalert/rules/disk_full.yaml
 
 WORKDIR /opt/elastalert-server
 COPY . /opt/elastalert-server
